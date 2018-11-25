@@ -1,0 +1,17 @@
+.navbar {
+  background-color: rgba(255, 255, 255, 0.822);
+  /* box-shadow: 1px 0 6px 0 gray; */
+}
+
+.navbar-brand {
+  text-transform: uppercase;
+  color: #393436;
+}
+
+.condor {
+  font-weight: bold;
+}
+
+.color-condor {
+  color: #F2C307;
+}

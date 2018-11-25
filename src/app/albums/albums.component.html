@@ -1,0 +1,32 @@
+<a class="nav-item nav-link mb-4" (click)="open(content)">
+  <i class="fa fa-plus"></i> New album <span class="sr-only">(current)</span>
+</a>
+
+<ng-template #content let-modal>
+  <div class="modal-body">
+    <form #albumForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <input type="text" class="form-control mb-2" id="name" required [(ngModel)]="album.name" name="name" #name="ngModel"
+          placeholder="Type the album's name">
+        <a class="nav-item nav-link mb-4 float-right" (click)="createAlbum();">
+          <i class="fa fa-save"></i> Save
+        </a>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<div class="row">
+  <div *ngFor="let album of albums" class="col-lg-3">
+    <a routerLink="/images/{{album._id}}/{{album.name}}">
+      <div class="album">
+        <i class="fa fa-images text-condor fa-2x"></i>
+        {{album.name}}
+      </div>
+    </a>
+  </div>
+</div>

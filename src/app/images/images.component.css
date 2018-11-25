@@ -1,0 +1,84 @@
+.item-image {
+    width: 100%;
+    height: 250px;
+    /* overflow: hidden; */
+    box-sizing: border-box;
+    position: relative;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transition: all .15s linear;
+    border-radius: 4px;
+}
+
+
+.item-image:hover > .image {
+    transform: scale(1.1);
+    box-shadow: 0 0 4px 0 gray;
+    z-index: 100;
+    border-radius: 0;
+}
+
+.dropdown-item {
+    color: #1A1A1C;
+    font-weight: bold;
+    font-size: .9em;
+}
+
+
+.dropdown-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.facolor {
+    color: gray;
+    font-size: 1.3em;
+} 
+
+.item-list {
+    list-style: none;
+    background-color: lightgray;
+    margin: 2px;
+    line-height: 3rem;
+    height: 3rem;
+    padding-left: 1rem;
+    position: relative;
+    display: block;
+    border-radius: 4px;
+}
+
+.check-album {
+    display: none;
+
+}
+
+.check-album + label {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.check-album + label::after {
+    content: '✔';
+    color: black;
+    position: absolute;
+    right: 1rem;
+    display: none;
+}
+
+.check-album:checked + label::after {
+    display: inline-block;
+}
+
+.check-album:hover + label::after {
+    display: inline-block;
+}

@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
+
+
+.nav-item {
+  display: inline-block;
+  font-weight: bold;
+  font-size: .9em;
+  color: #F2C307 !important;
+  background-color: rgb(250, 245, 226);
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background-color: rgb(247, 237, 199);
+  color: #F2C307;
+}
+
+.nav-item:active {
+  transform: scale(.9);
+}
+
+
+.text-condor {
+  color: gray;
+}
+
+.color-condor {
+  color: #F2C307;
+}
