@@ -129,6 +129,6 @@
       <a class="nav-item nav-link" *ngIf="image.albums_id" (click)="removeFromAlbum(image);"><i class="fa fa-images"></i>
         Drop</a>
     </ng-template>
-    <img src="http://localhost:3000/image/{{image._id}}" class="img-fluid image" alt="{{image._id}}">
+    <img src="{{URI}}/image/{{image._id}}" class="img-fluid image" alt="{{image._id}}">
   </div>
 </div>

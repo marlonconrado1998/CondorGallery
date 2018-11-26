@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Album } from './album.model';
+import { environment } from './../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -12,10 +13,10 @@ export class AlbumsService {
     ) { }
 
     getAlbums() {
-        return this.http.get<Album[]>('http://localhost:3000/albums');
+        return this.http.get<Album[]>(`${environment.uri}/albums`);
     }
 
     createAlbum(name) {
-        return this.http.post('http://localhost:3000/album', {name: name});
+        return this.http.post(`${environment.uri}/album`, {name: name});
     }
 }

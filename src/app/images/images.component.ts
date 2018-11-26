@@ -8,6 +8,9 @@ import { ImageService } from './shared/image.service';
 import { AlbumsService } from './../albums/shared/albums.service';
 import { Album } from './../albums/shared/album.model';
 
+import { environment } from './../../environments/environment';
+
+
 @Component({
   selector: 'app-images',
   templateUrl: './images.component.html',
@@ -40,6 +43,9 @@ export class ImagesComponent implements OnInit {
   dateFrom;
   dateTo;
   nameFilter;
+
+  // URi 
+  URI: string = environment.uri;
 
   constructor(
     private imageService: ImageService,

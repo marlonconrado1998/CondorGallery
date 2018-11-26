@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Image } from './image.model';
+import { environment } from './../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,31 +13,31 @@ export class ImageService {
   ) { }
 
   getImages() {
-    return this.http.get<Image[]>('http://localhost:3000/list_images');
+    return this.http.get<Image[]>(`${environment.uri}/list_images`);
   }
 
   getImagesByAlbum(idalbum) {
-    return this.http.get<Image[]>(`http://localhost:3000/albums_images/${idalbum}`);
+    return this.http.get<Image[]>(`${environment.uri}/albums_images/${idalbum}`);
   }
 
   removeImage(idimage) {
-    return this.http.delete(`http://localhost:3000/image/${idimage}`);
+    return this.http.delete(`${environment.uri}/image/${idimage}`);
   }
 
   saveImage(fd) {
-    return this.http.post(`http://localhost:3000/image`, fd);
+    return this.http.post(`${environment.uri}/image`, fd);
   }
 
   addImageToAlbum(idalbum, idimage) {
 
-    return this.http.post(`http://localhost:3000/add_to_album`, { idalbum, idimage });
+    return this.http.post(`${environment.uri}/add_to_album`, { idalbum, idimage });
   }
 
   removeFromAlbum(idimage) {
-    return this.http.put(`http://localhost:3000/remove_from_album/${idimage._id}`, {});
+    return this.http.put(`${environment.uri}/remove_from_album/${idimage._id}`, {});
   }
 
   filterImage(name, from, to) {
-    return this.http.get<Image[]>(`http://localhost:3000/filter_image/${name}/${from}/${to}`, {});
+    return this.http.get<Image[]>(`${environment.uri}/filter_image/${name}/${from}/${to}`, {});
   }
 }
