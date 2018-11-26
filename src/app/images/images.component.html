@@ -53,10 +53,14 @@
     </button>
   </div>
   <div class="modal-body">
-    <div class="item-list" *ngFor="let album of albums; let i = index">
+    <div class="item-list mb-2" *ngFor="let album of albums; let i = index">
       <input type="radio" [checked]="albumSeleced == album" name="album" (change)="selectAlbum(album);" id="check-album{{i}}"
         class="check-album">
       <label for="check-album{{i}}">{{album.name}}</label>
+    </div>
+    <div class="row justify-content-center align-items-center mt-2">
+      <p class="not-found" routerLink="/album" (click)="modal.dismiss('Cross click')"><i class="fa fa-images"></i>
+        Create a new album.</p>
     </div>
     <div class="mt-4">
       <a class="nav-item nav-link mb-4 float-left" (click)="unSelectAlbum();">
@@ -72,10 +76,11 @@
 <div class="row mb-4">
   <div class="col-2">
     <a class="nav-item nav-link mb-4 " (click)="open(content)">
-      <i class="fa fa-upload"></i> New image
+      <i class="fa fa-upload"></i>
+      <label class="d-none d-md-inline-block">New image</label>
     </a>
   </div>
-  <div *ngIf="paramMethod != 'byAlbum'" class="offset-2 col-8">
+  <div *ngIf="paramMethod != 'byAlbum'" class="offset-1 col-9">
     <form>
       <div class="input-group row">
         <div class="input-group-append">
@@ -97,7 +102,7 @@
         <div class="input-group-append">
           <button (click)="filterImage();" class="btn btn-success">
             <i class="fa fa-search"></i>
-            Search
+            <!-- <label class="d-none d-md-inline-block">Search</label> -->
           </button>
         </div>
       </div>
@@ -112,7 +117,7 @@
   <p (click)="open(content)" class="not-found"><i class="fa fa-image"></i> Save an image.</p>
 </div>
 <div class="row" *ngIf="loader == 2">
-  <div *ngFor="let image of images" class="col-lg-4 mb-4 item-image" placement="top" [ngbPopover]="popContent"
+  <div *ngFor="let image of images" class="col-md-6 col-lg-4 mb-4 item-image" placement="top" [ngbPopover]="popContent"
     popoverTitle="Image detail">
     <ng-template #popContent>
       <p><i class="fa fa-calendar facolor mr-2"></i>{{image.uploadDate | date:'short'}}</p>
