@@ -14,6 +14,14 @@ export class AlbumsComponent implements OnInit {
   albums: Album[];
   album: Album = new Album('');
 
+  /*  loader have 3 states type number
+   *  state 1 -> Is searching 
+   *  state 2 -> Came data
+   *  state 3 -> Did not come data
+   */
+  loader: number = 3; // handle loader, 
+  loaderForm: boolean = false;
+
   constructor(
     private albumsService: AlbumsService,
     private modalService: NgbModal
@@ -24,14 +32,28 @@ export class AlbumsComponent implements OnInit {
   }
 
   getAlbums() {
+    this.loader = 1;
     this.albumsService.getAlbums()
-      .subscribe(albums => this.albums = albums);
+      .subscribe(albums => {
+        if (albums && albums.length > 0) {
+          this.albums = albums;
+          this.loader = 2;
+        }else{
+          this.loader = 3;
+        }
+      });
   }
 
   createAlbum() {
+
+    if (!this.album.name) {
+      return false;
+    }
+    this.loaderForm = true;
     this.albumsService.createAlbum(this.album.name)
       .subscribe(resp => {
         this.album.name = null;
+        this.loaderForm = false;
         this.modalService.dismissAll();
         this.getAlbums();
         alert(resp['msg']);

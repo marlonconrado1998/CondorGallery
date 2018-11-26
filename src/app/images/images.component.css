@@ -17,7 +17,7 @@
 
 .item-image:hover > .image {
     transform: scale(1.1);
-    box-shadow: 0 0 4px 0 gray;
+    box-shadow: 0 0 2px 0 lightgray;
     z-index: 100;
     border-radius: 0;
 }

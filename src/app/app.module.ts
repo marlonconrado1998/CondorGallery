@@ -20,7 +20,7 @@ import { AlbumsService } from './albums/shared/albums.service';
 const routes: Routes = [
   { path: '', redirectTo: '/albums', pathMatch: 'full' },
   { path: 'images', component: ImagesComponent },
-  { path: 'images/:id/:album', component: ImagesComponent },
+  { path: 'images/:method/:id/:album', component: ImagesComponent },
   { path: 'albums', component: AlbumsComponent },
   {path: '**', redirectTo: '/albums'}
 ];

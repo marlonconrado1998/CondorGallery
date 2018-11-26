@@ -1,12 +1,9 @@
-<nav aria-label="breadcrumb" *ngIf="album">
+<nav aria-label="breadcrumb" *ngIf="paramAlbum">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href routerLink="/albums">Albums</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{album}}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{paramAlbum}}</li>
   </ol>
 </nav>
-<a class="nav-item nav-link mb-4 " (click)="open(content)">
-  <i class="fa fa-upload"></i> New image
-</a>
 <ng-template #content let-modal>
   <div class="modal-header">
     <h6>Save an image</h6>
@@ -16,6 +13,11 @@
   </div>
   <div class="modal-body">
     <form #imageForm="ngForm">
+      <div class="form-disabled" *ngIf="loaderForm">
+        <div class="row justify-content-center align-items-center" style="height: 100%; width: 100%;">
+          <div class="loader"></div>
+        </div>
+      </div>
       <div class="form-group">
         <label for="file">Image</label>
         <div class="input-group mb-3">
@@ -39,6 +41,11 @@
 </ng-template>
 
 <ng-template #seletcAudio let-modal>
+  <div class="form-disabled" *ngIf="loaderForm">
+    <div class="row justify-content-center align-items-center" style="height: 100%; width: 100%;">
+      <div class="loader"></div>
+    </div>
+  </div>
   <div class="modal-header">
     <h6>Select Album</h6>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -46,32 +53,76 @@
     </button>
   </div>
   <div class="modal-body">
-      <div class="item-list" *ngFor="let album of albums; let i = index">
-        <input type="radio" [checked]="albumSeleced == album" name="album" (change)="selectAlbum(album);" id="check-album{{i}}" class="check-album">
-        <label for="check-album{{i}}">{{album.name}}</label>
-      </div>
-      <div class="mt-4">
+    <div class="item-list" *ngFor="let album of albums; let i = index">
+      <input type="radio" [checked]="albumSeleced == album" name="album" (change)="selectAlbum(album);" id="check-album{{i}}"
+        class="check-album">
+      <label for="check-album{{i}}">{{album.name}}</label>
+    </div>
+    <div class="mt-4">
       <a class="nav-item nav-link mb-4 float-left" (click)="unSelectAlbum();">
         <i class="fa fa-times"></i> Cancel
       </a>
       <a *ngIf="albumSeleced" class="nav-item nav-link mb-4 float-right" (click)="addToAlbum()">
         <i class="fa fa-save"></i> Save
       </a>
-      </div> 
+    </div>
   </div>
 </ng-template>
+<br><br>
+<div class="row mb-4">
+  <div class="col-2">
+    <a class="nav-item nav-link mb-4 " (click)="open(content)">
+      <i class="fa fa-upload"></i> New image
+    </a>
+  </div>
+  <div *ngIf="paramMethod != 'byAlbum'" class="offset-2 col-8">
+    <form>
+      <div class="input-group row">
+        <div class="input-group-append">
+          <input class="form-control" style="display: none" readonly placeholder="yyyy-mm-dd" name="datefrom"
+            [(ngModel)]="dateFrom" ngbDatepicker #from="ngbDatepicker">
+          <span *ngIf="!dateFrom" class="input-group-text" (click)="from.toggle();"><i class="fa fa-calendar-alt mr-2"></i>From</span>
+          <span *ngIf="dateFrom" class="input-group-text"> <i class="fa fa-times mr-2" (click)="clearDate('from');"></i>
+            {{dateFrom.year + '-' + dateFrom.month + '-' + dateFrom.day}}</span>
 
+          <input class="form-control" style="display: none" readonly placeholder="yyyy-mm-dd" name="dateTo" [(ngModel)]="dateTo"
+            ngbDatepicker #to="ngbDatepicker">
+          <span *ngIf="!dateTo" class="input-group-text" (click)="to.toggle();"><i class="fa fa-calendar-alt mr-2"></i>To</span>
+          <span *ngIf="dateTo" class="input-group-text"><i class="fa fa-times mr-2" (click)="clearDate('to');"></i>
+            {{dateTo.year + '-' + dateTo.month + '-' + dateTo.day}}
+          </span>
 
-<div class="row">
-  <div *ngFor="let image of images" class="col-lg-4 mb-4 item-image" placement="bottom" [ngbPopover]="popContent"
+        </div>
+        <input type="text" class="form-control" placeholder="Search image" name="nameFilter" [(ngModel)]="nameFilter">
+        <div class="input-group-append">
+          <button (click)="filterImage();" class="btn btn-success">
+            <i class="fa fa-search"></i>
+            Search
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="loader == 1" class="row justify-content-center align-items-center">
+  <div class="loader"></div>
+</div>
+<div *ngIf="loader == 3" class="row justify-content-center align-items-center">
+  <p (click)="open(content)" class="not-found"><i class="fa fa-image"></i> Save an image.</p>
+</div>
+<div class="row" *ngIf="loader == 2">
+  <div *ngFor="let image of images" class="col-lg-4 mb-4 item-image" placement="top" [ngbPopover]="popContent"
     popoverTitle="Image detail">
     <ng-template #popContent>
       <p><i class="fa fa-calendar facolor mr-2"></i>{{image.uploadDate | date:'short'}}</p>
       <p><i class="fa fa-image facolor mr-2"></i>{{image.filename}}</p>
-      <p><i class="fa fa-images facolor mr-2"></i>{{image.albums_id}}</p>
+      <p><i class="fa fa-images facolor mr-2" *ngIf="image.albums_id"></i>{{image.albums_id}}</p>
       <a class="nav-item nav-link mr-2" (click)="removeImage(image._id);"> <i class="fa fa-trash-alt"></i> Remove</a>
-      <a class="nav-item nav-link" *ngIf="!image.albums_id" (click)="open(seletcAudio, image)"><i class="fa fa-plus"></i> Add to album</a>
-      <a class="nav-item nav-link" *ngIf="image.albums_id" (click)="removeFromAlbum(image);"><i class="fa fa-times"></i> Drop</a>
+      <a class="nav-item nav-link" *ngIf="!image.albums_id" (click)="open(seletcAudio, image)"><i class="fa fa-plus"></i>
+        Add to album</a>
+      <a class="nav-item nav-link" *ngIf="image.albums_id" (click)="removeFromAlbum(image);"><i class="fa fa-images"></i>
+        Drop</a>
     </ng-template>
     <img src="http://localhost:3000/image/{{image._id}}" class="img-fluid image" alt="{{image._id}}">
   </div>

@@ -35,4 +35,8 @@ export class ImageService {
   removeFromAlbum(idimage) {
     return this.http.put(`http://localhost:3000/remove_from_album/${idimage._id}`, {});
   }
+
+  filterImage(name, from, to) {
+    return this.http.get<Image[]>(`http://localhost:3000/filter_image/${name}/${from}/${to}`, {});
+  }
 }

@@ -4,6 +4,11 @@
 
 <ng-template #content let-modal>
   <div class="modal-body">
+    <div class="form-disabled" *ngIf="loaderForm">
+      <div class="row justify-content-center align-items-center" style="height: 100%; width: 100%;">
+          <div class="loader"></div>
+      </div>
+    </div>
     <form #albumForm="ngForm">
       <div class="form-group">
         <label for="name">Name</label>
@@ -13,16 +18,24 @@
         <input type="text" class="form-control mb-2" id="name" required [(ngModel)]="album.name" name="name" #name="ngModel"
           placeholder="Type the album's name">
         <a class="nav-item nav-link mb-4 float-right" (click)="createAlbum();">
-          <i class="fa fa-save"></i> Save
+          <i class="fa fa-save"></i>
+          Save
         </a>
       </div>
     </form>
   </div>
 </ng-template>
 
-<div class="row">
+<div *ngIf="loader == 1" class="row justify-content-center align-items-center">
+  <div class="loader"></div>
+</div>
+<div *ngIf="loader == 3" class="row justify-content-center align-items-center">
+  <p (click)="open(content)" class="not-found"><i class="fa fa-images"></i> Create a new album.</p>
+</div>
+
+<div class="row" *ngIf="loader == 2">
   <div *ngFor="let album of albums" class="col-lg-3">
-    <a routerLink="/images/{{album._id}}/{{album.name}}">
+    <a routerLink="/images/byAlbum/{{album._id}}/{{album.name}}">
       <div class="album">
         <i class="fa fa-images text-condor fa-2x"></i>
         {{album.name}}
